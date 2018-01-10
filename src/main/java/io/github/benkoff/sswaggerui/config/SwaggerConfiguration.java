@@ -1,7 +1,16 @@
 package io.github.benkoff.sswaggerui.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.ArrayList;
 
 /*
  * Created by Ben Novikov on 2018-01-10
@@ -10,4 +19,25 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 public class SwaggerConfiguration {
 
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build()
+                .apiInfo(metaData());
+    }
+
+    private ApiInfo metaData() {
+        return new ApiInfo(
+                "Links Storage Microservice Docs",
+                "Benkoff(R) SampleDocs(TM) links storage service sample API",
+                "0.2.0",
+                "termsOfServiceUrl",
+                new Contact("Benkoff", "https://benkoff.github.io", "bigopendatanet@gmail.com"),
+                "Apache License 2.0",
+                "https://choosealicense.com",
+                new ArrayList<>());
+    }
 }
