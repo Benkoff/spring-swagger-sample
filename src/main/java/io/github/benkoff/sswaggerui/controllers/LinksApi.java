@@ -24,50 +24,69 @@ import javax.validation.Valid;
  */
 public interface LinksApi {
 
-    @ApiOperation(value = "Get all links", notes = "Returns a list containing saved links. The list supports paging.", response = ResponseBody.class, tags={  })
+    @ApiOperation(value = "Get all links", notes = "Returns a list containing saved links. The list supports paging.",
+            response = ResponseBody.class, tags={  })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Ok", response = ResponseBody.class),
-            @ApiResponse(code = 404, message = "Links not found but may be available in the future.", response = Void.class),
+            @ApiResponse(code = 404, message = "Links not found but may be available in the future.",
+                    response = Void.class),
             @ApiResponse(code = 500, message = "Unexpected error.", response = Void.class) })
 
     @RequestMapping(value = "/links",
             produces = { "application/json" },
             method = RequestMethod.GET)
-    ResponseEntity<ResponseBody> linksGet(@ApiParam(value = "Set true (default value) to return active links only, false to get all the links saved") @RequestParam(value = "activeOnly", required = false) Boolean activeOnly,@ApiParam(value = "Number of links returned") @RequestParam(value = "pageSize", required = false) Integer pageSize,@ApiParam(value = "Page number") @RequestParam(value = "pageNumber", required = false) Integer pageNumber);
+    ResponseEntity<ResponseBody> linksGet(
+            @ApiParam(value = "Set true (default value) to return active links only, false to get all the links saved")
+            @RequestParam(value = "activeOnly", required = false) Boolean activeOnly,
+            @ApiParam(value = "Number of links returned")
+            @RequestParam(value = "pageSize", required = false) Integer pageSize,
+            @ApiParam(value = "Page number")
+            @RequestParam(value = "pageNumber", required = false) Integer pageNumber);
 
 
     @ApiOperation(value = "Delete the link specified by it`s ID.", notes = "", response = Void.class, tags={  })
     @ApiResponses(value = {
             @ApiResponse(code = 204, message = "Link has been deleted.", response = Void.class),
             @ApiResponse(code = 400, message = "Invalid ID supplied.", response = Void.class),
-            @ApiResponse(code = 401, message = "Authorization to get access to requested data is missing or invalid.", response = Void.class),
+            @ApiResponse(code = 401, message = "Authorization to get access to requested data is missing or invalid.",
+                    response = Void.class),
             @ApiResponse(code = 404, message = "A link with the specified ID was not found.", response = Void.class),
             @ApiResponse(code = 500, message = "Unexpected error.", response = Void.class) })
 
     @RequestMapping(value = "/links/{id}",
             produces = { "application/json" },
             method = RequestMethod.DELETE)
-    ResponseEntity<Void> linksIdDelete(@ApiParam(value = "This resource represents an individual saved link. Each link is identified by a string 'id'",required=true ) @PathVariable("id") String id);
+    ResponseEntity<Void> linksIdDelete(
+            @ApiParam(value = "This resource represents an individual saved link. Each link is identified by a string 'id'",
+                    required=true )
+            @PathVariable("id") String id);
 
-
-    @ApiOperation(value = "Get a link by link`s ID", notes = "Returns a single link for its ID", response = ResponseBody.class, tags={  })
+    @ApiOperation(value = "Get a link by link`s ID",
+            notes = "Returns a single link for its ID",
+            response = ResponseBody.class, tags={  })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Ok", response = ResponseBody.class),
-            @ApiResponse(code = 401, message = "Authorization to get access to requested data is missing or invalid.", response = Void.class),
+            @ApiResponse(code = 401, message = "Authorization to get access to requested data is missing or invalid.",
+                    response = Void.class),
             @ApiResponse(code = 404, message = "The Link does not exist.", response = Void.class),
             @ApiResponse(code = 500, message = "Unexpected error.", response = Void.class) })
 
     @RequestMapping(value = "/links/{id}",
             produces = { "application/json" },
             method = RequestMethod.GET)
-    ResponseEntity<ResponseBody> linksIdGet(@ApiParam(value = "This resource represents an individual saved link. Each link is identified by a string 'id'",required=true ) @PathVariable("id") String id);
+    ResponseEntity<ResponseBody> linksIdGet(
+            @ApiParam(value = "This resource represents an individual saved link. Each link is identified by a string 'id'",
+                    required=true )
+            @PathVariable("id")
+                    String id);
 
 
     @ApiOperation(value = "Update an existing link by link`s ID", notes = "", response = Void.class, tags={  })
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Link successfully updated.", response = Void.class),
             @ApiResponse(code = 400, message = "Invalid ID supplied.", response = Void.class),
-            @ApiResponse(code = 401, message = "Authorization to get access to requested data is missing or invalid.", response = Void.class),
+            @ApiResponse(code = 401, message = "Authorization to get access to requested data is missing or invalid.",
+                    response = Void.class),
             @ApiResponse(code = 404, message = "A link with the specified ID was not found.", response = Void.class),
             @ApiResponse(code = 500, message = "Unexpected error.", response = Void.class) })
 
@@ -75,10 +94,19 @@ public interface LinksApi {
             produces = { "application/json" },
             consumes = { "application/json" },
             method = RequestMethod.PUT)
-    ResponseEntity<Void> linksIdPut(@ApiParam(value = "This resource represents an individual saved link. Each link is identified by a string 'id'",required=true ) @PathVariable("id") String id,@ApiParam(value = "Link to be updated" ,required=true )  @Valid @RequestBody ResponseBody link);
+    ResponseEntity<Void> linksIdPut(
+            @ApiParam(value = "This resource represents an individual saved link. Each link is identified by a string 'id'",
+                    required=true )
+            @PathVariable("id")
+                    String id,
+            @ApiParam(value = "Link to be updated" ,required=true )
+            @Valid
+            @RequestBody
+                    ResponseBody link);
 
 
-    @ApiOperation(value = "Save a link", notes = "Adds a new link to the links list.", response = ResponseBody.class, tags={  })
+    @ApiOperation(value = "Save a link", notes = "Adds a new link to the links list.",
+            response = ResponseBody.class, tags={  })
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Link successfully has been saved.", response = ResponseBody.class),
             @ApiResponse(code = 400, message = "Link has not been saved.", response = Void.class),
@@ -88,20 +116,32 @@ public interface LinksApi {
             produces = { "application/json" },
             consumes = { "application/json" },
             method = RequestMethod.POST)
-    ResponseEntity<ResponseBody> linksPost(@ApiParam(value = "Link to be updated" ,required=true )  @Valid @RequestBody RequestBody link);
+    ResponseEntity<ResponseBody> linksPost(@ApiParam(value = "Link to be updated" ,required=true )
+                                           @Valid @RequestBody RequestBody link);
 
 
-    @ApiOperation(value = "Get all user`s links by user`s ID", notes = "Returns a list containing saved links. The list supports paging.", response = ResponseBody.class, tags={  })
+    @ApiOperation(value = "Get all user`s links by user`s ID",
+            notes = "Returns a list containing saved links. The list supports paging.",
+            response = ResponseBody.class, tags={  })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Links of the user.", response = ResponseBody.class),
             @ApiResponse(code = 400, message = "Invalid ID supplied.", response = Void.class),
-            @ApiResponse(code = 401, message = "Authorization to get access to requested data is missing or invalid.", response = Void.class),
+            @ApiResponse(code = 401, message = "Authorization to get access to requested data is missing or invalid.",
+                    response = Void.class),
             @ApiResponse(code = 404, message = "The user has no links.", response = Void.class),
             @ApiResponse(code = 500, message = "Unexpected error.", response = Void.class) })
-
     @RequestMapping(value = "/links/user/{user}",
             produces = { "application/json" },
             method = RequestMethod.GET)
-    ResponseEntity<ResponseBody> linksUserUserGet(@ApiParam(value = "The link's ID",required=true ) @PathVariable("user") String user,@ApiParam(value = "Number of links returned") @RequestParam(value = "pageSize", required = false) Integer pageSize,@ApiParam(value = "Page number") @RequestParam(value = "pageNumber", required = false) Integer pageNumber);
+    ResponseEntity<ResponseBody> linksUserUserGet(
+            @ApiParam(value = "The link's ID",required=true )
+            @PathVariable("user")
+                    String user,
+            @ApiParam(value = "Number of links returned")
+            @RequestParam(value = "pageSize", required = false)
+                    Integer pageSize,
+            @ApiParam(value = "Page number")
+            @RequestParam(value = "pageNumber", required = false)
+                    Integer pageNumber);
 
 }
